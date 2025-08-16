@@ -1,0 +1,14 @@
+<li class="course-item" id="course-<%= course.id %>">
+  <div>
+    <strong><%= link_to course.title, course_path(course) %></strong>
+    <small> — <%= course.participants_count || course.participants.count %> uczestników</small>
+  </div>
+  <div>
+    <%= link_to "Show", course_path(course) %> |
+    <%= link_to "Edit", edit_course_path(course) %> |
+    <%= button_to "Delete", course_path(course),
+               method: :delete,
+               data: { confirm: "Delete this course?" },
+               form: { style: "display:inline" } %>
+  </div>
+</li>

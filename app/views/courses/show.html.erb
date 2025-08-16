@@ -1,0 +1,33 @@
+<h1><%= @course.title %></h1>
+<p><%= @course.description %></p>
+<p>Place: <%= link_to @course.place.name, place_path(@course.place) %></p>
+
+<hr>
+
+<h2>Participants</h2>
+
+<div id="participants-errors" style="color: red;"></div>
+
+<ul id="participants-list">
+  <% @participants.each do |p| %>
+    <li id="participant-<%= p.id %>">
+      <strong><%= p.name %></strong> — <%= p.email %>
+      <%= link_to "Edit", edit_participant_path(p) %> |
+      <%= button_to "Delete", participant_path(p), method: :delete, data: { confirm: "Delete participant?" }, form: { data: { turbo: false } } %>
+    </li>
+  <% end %>
+</ul>
+
+<h3>Add participant</h3>
+
+<%= form_with model: [@course, @participant], id: "new_participant_form", local: false do |f| %>
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name, required: true %>
+  </div>
+  <div>
+    <%= f.label :email %><br>
+    <%= f.email_field :email, required: true %>
+  </div>
+  <%= f.submit "Add", data: { disable_with: "Adding..." } %>
+<% end %>
