@@ -1,33 +1,36 @@
-<h1><%= @place.name %></h1>
-<p><%= @place.address %></p>
+<h1 class="text-3xl font-bold mb-6">Nazwa zakładki</h1>
+<p class="text-gray-600 mb-6"><%= @place.address %></p>
 
-<div style="margin-top:8px; margin-bottom:12px;">
-  <%= link_to "Back to places", places_path, class: "btn" %>
-  <%= link_to "Edit", edit_place_path(@place), class: "btn", style: "margin-left:8px;" %>
-
-  <%= button_to "Delete", place_path(@place),
-                method: :delete,
-                data: { confirm: "Are you sure you want to delete this place and all its courses?" },
-                form: { style: "display:inline; margin-left:8px;" },
-                class: "btn btn-danger" %>
+<div class="flex gap-3 mb-6">
+  <%= link_to "✏️ Edit", edit_place_path(@place), class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition" %>
+  <%= link_to "🗑 Delete", place_path(@place),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+              class: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" %>
+  <%= link_to "⬅ Back", places_path, class: "px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" %>
 </div>
 
-<hr>
+<hr class="my-6 border-gray-300">
 
-<div style="display:flex; justify-content:space-between; align-items:center;">
-  <h2>Courses (<%= @courses.size %>)</h2>
-  <%= link_to "New Course", new_place_course_path(@place), class: "btn" %>
+<div class="flex items-center justify-between mb-4">
+  <h2 class="text-2xl font-semibold">
+    Courses (<%= @courses.size %>)
+  </h2>
+  <%= link_to "➕ New Course", new_place_course_path(@place),
+              class: "px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition" %>
 </div>
 
 <% if @courses.any? %>
-  <ul id="place-courses-list" style="margin-top:8px;">
+  <ul class="space-y-3">
     <% @courses.each do |course| %>
-      <%= render partial: "course", locals: { course: course } %>
+      <li class="p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition">
+        <%= render partial: "course", locals: { course: course } %>
+      </li>
     <% end %>
   </ul>
 <% else %>
-  <p style="margin-top:8px;">
-    Brak kursów w tym miejscu.
-    <%= link_to "Dodaj pierwszy kurs", new_place_course_path(@place), class: "btn", style: "margin-left:8px;" %>
+  <p class="text-gray-500">
+    Brak kursów w tym miejscu. 
+    <%= link_to "Dodaj pierwszy kurs", new_place_course_path(@place),
+                class: "text-blue-600 hover:underline" %>
   </p>
 <% end %>

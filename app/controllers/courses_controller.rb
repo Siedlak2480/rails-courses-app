@@ -12,7 +12,6 @@ class CoursesController < ApplicationController
   end
 
   def create
-    # jeśli wywołane jako /places/:place_id/courses
     if params[:place_id]
       @course = Place.find(params[:place_id]).courses.build(course_params)
     else
@@ -26,7 +25,9 @@ class CoursesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  @place = @course.place
+  end
 
   def update
     if @course.update(course_params)
@@ -88,7 +89,9 @@ class ParticipantsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  @place = @course.place
+  end
 
   def update
     if @participant.update(participant_params)

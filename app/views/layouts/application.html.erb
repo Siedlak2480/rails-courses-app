@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "School" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>ActiveMVP</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_importmap_tags %>
+</head>
 
-    <%= yield :head %>
+<header style="padding:16px; border-bottom:1px solid #eee; margin-bottom:20px;">
+  <nav>
+    <%= link_to "Home", root_path, id: "nav-home", style: "margin-right:12px;" %>
+    <%= link_to "Places", places_path, id: "nav-places", style: "margin-right:12px;" %>
+    <%= link_to "New Place", new_place_path, id: "nav-new-place" %>
+  </nav>
+</header>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body>
+  <main style="padding: 0 16px;">
+    <% if notice %>
+      <p style="background:#e6ffed; padding:8px; border:1px solid #b7f5c3"><%= notice %></p>
+    <% end %>
     <%= yield %>
-  </body>
+  </main>
+</body>
 </html>

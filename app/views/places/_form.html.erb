@@ -1,0 +1,26 @@
+<%= form_with model: @place, local: true do |f| %>
+  <% if @place.errors.any? %>
+    <div class="errors" style="color: red;">
+      <h4><%= pluralize(@place.errors.count, "error") %> prevented saving:</h4>
+      <ul>
+        <% @place.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :address %><br>
+    <%= f.text_field :address %>
+  </div>
+
+  <div style="margin-top:12px;">
+    <%= f.submit %>
+  </div>
+<% end %>

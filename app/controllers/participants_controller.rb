@@ -7,22 +7,24 @@ class ParticipantsController < ApplicationController
   end
 
   def create
-    if @course
-      @participant = @course.participants.build(participant_params)
-    else
-      @participant = Participant.new(participant_params)
-    end
+  if @course
+    @participant = @course.participants.build(participant_params)
+  else
+    @participant = Participant.new(participant_params)
+  end
 
-    respond_to do |format|
-      if @participant.save
-        format.html { redirect_to course_path(@participant.course || @course), notice: "Participant added." }
-        format.json { render json: @participant, status: :created }
-      else
-        format.html { render :new }
-        format.json { render json: { errors: @participant.errors.full_messages }, status: :unprocessable_entity }
-      end
+  respond_to do |format|
+    if @participant.save
+      # zwracamy tylko najważniejsze pola w JSON (bez nadmiarowych danych)
+      format.html { redirect_to course_path(@participant.course || @course), notice: "Participant added." }
+      format.json { render json: @participant.as_json(only: [:id, :name, :email, :course_id]), status: :created }
+    else
+      format.html { render :new }
+      # zawsze zwracamy errors jako tablicę pod kluczem "errors"
+      format.json { render json: { errors: @participant.errors.full_messages }, status: :unprocessable_entity }
     end
   end
+end
 
   def edit; end
 
